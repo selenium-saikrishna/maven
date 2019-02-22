@@ -21,15 +21,15 @@ pipeline
         {
             steps
             {
-                sh 'scp /var/lib/jenkins/workspace/Declarative_Pipeline/webapp/target/webapp.war vagrant@10.10.10.32:/var/lib/tomcat7/webapps/qaenv.war'
+                sh 'scp /home/ubuntu/.jenkins/workspace/Declarative_Pipeline/webapp/target/webapp.war ubuntu@172.31.28.230:/var/lib/tomcat8/webapps/qaenv.war'
             }
         }
         stage('ContTesting')
         {
             steps
             {
-                git 'https://github.com/selenium-saikrishna/TestingOnLinux.git'
-                sh 'java -jar  /var/lib/jenkins/workspace/Declarative_Pipeline/testing.jar'
+                git 'https://github.com/selenium-saikrishna/FunctionalTesting.git'
+                sh 'java -jar  /home/ubuntu/.jenkins/workspace/Declarative_Pipeline/testing.jar'
             }
         }
     }
@@ -37,16 +37,14 @@ pipeline
     {
         success
         {
-            input message: 'Waiting for approval from DM', submitter: 'Srinivas'
-    sh 'scp /var/lib/jenkins/workspace/Declarative_Pipeline/webapp/target/webapp.war vagrant@10.10.10.33:/var/lib/tomcat7/webapps/prodenv.war'
+            input message: 'Waiting for approval from DM', submitter: 'brajesh'
+    sh 'scp /home/ubuntu/.jenkins/workspace/Declarative_Pipeline/webapp/target/webapp.war ubuntu@172.31.20.225:/var/lib/tomcat8/webapps/prodenv.war'
         }
         failure
         {
-            mail bcc: '', body: '', cc: '', from: '', replyTo: '', subject: 'Build failed', to: 'gandham.saikrishna@gmail.com'
+            mail bcc: '', body: '', cc: '', from: '', replyTo: '', subject: 'Build failed', to: 'brajeshmodi26@gmail.com'
             
         }
         
      }
-      
-    
 }
